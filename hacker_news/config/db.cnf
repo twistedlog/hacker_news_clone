@@ -1,0 +1,5 @@
+[client]
+database = hndb
+user = root
+password = toor
+default-charset-set = utf8
