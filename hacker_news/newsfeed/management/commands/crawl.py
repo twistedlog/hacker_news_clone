@@ -9,6 +9,7 @@ from newsfeed.models import NewsItem
 from _utils import format_item_url
 
 
+# https://github.com/twoscoops/django-twoscoops-project
 class Command(BaseCommand):
     help = 'Crawls HN to get the latest {update_no} updates'.format(update_no=settings.UPDATE_NO)
     
