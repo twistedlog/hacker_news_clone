@@ -20,10 +20,16 @@ class NewsItem(models.Model):
     
     
 class UserNewsItemTrack(models.Model):
-  user = models.ForeignKey(User)
-  news_item = models.ForeignKey(NewsItem)
-  read = models.BooleanField()
-  deleted = models.BooleanField()
-  created = models.DateTimeField(auto_now_add=True)
-  modified = models.DateTimeField(auto_now=True)
+    user = models.ForeignKey(User)
+    news_item = models.ForeignKey(NewsItem)
+    read = models.BooleanField(default=False)
+    deleted = models.BooleanField(default=False)
+    created = models.DateTimeField(auto_now_add=True)
+    modified = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        unique_together = ("user", "news_item")
+  
+    def save(self, *args, **kwargs):
+        super(UserNewsItemTrack, self).save(*args, **kwargs)
   
