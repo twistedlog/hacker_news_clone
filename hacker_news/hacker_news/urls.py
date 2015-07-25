@@ -20,8 +20,11 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import (login, logout)
 from django.contrib.auth.decorators import user_passes_test
+from django.conf import settings
+from django.conf.urls.static import static
 
-from newsfeed.views import NewsItemListView
+from newsfeed.views import (
+    NewsItemListView, NewsItemReadView, NewsItemDeleteView)
 from user_management.views import RegistrationView
 
 login_forbidden = user_passes_test(lambda u : u.is_anonymous(), '/posts/')
@@ -32,5 +35,7 @@ urlpatterns = [
     url(r'^accounts/register/$', login_forbidden(RegistrationView.as_view()), name='register'),
     url(r'^accounts/logout/$', login_required(logout), {'next_page': '/accounts/login/'}, name='logout'),
     url(r'^posts/', login_required(NewsItemListView.as_view()), name='post-list-view'),
+    url(r'^post/read/$', login_required(NewsItemReadView.as_view()), name='read'),
+    url(r'^post/delete/$', login_required(NewsItemDeleteView.as_view()), name='delete'),
     
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
