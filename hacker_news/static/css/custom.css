@@ -1,0 +1,5 @@
+td.customtable /* Give whatever class name you want */
+{
+  width:11em; /* Give whatever width you want */
+  word-wrap:break-word;
+}
