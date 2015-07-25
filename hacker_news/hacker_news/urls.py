@@ -15,10 +15,22 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
+from django.views.generic.edit import CreateView
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.views import (login, logout)
+from django.contrib.auth.decorators import user_passes_test
 
 from newsfeed.views import NewsItemListView
+from user_management.views import RegistrationView
+
+login_forbidden = user_passes_test(lambda u : u.is_anonymous(), '/posts/')
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^posts/', NewsItemListView.as_view(), name='post-list-view')
+    url(r'^accounts/login/$', login_forbidden(login), name='login'),
+    url(r'^accounts/register/$', login_forbidden(RegistrationView.as_view()), name='register'),
+    url(r'^accounts/logout/$', login_required(logout), {'next_page': '/accounts/login/'}, name='logout'),
+    url(r'^posts/', login_required(NewsItemListView.as_view()), name='post-list-view'),
+    
 ]
