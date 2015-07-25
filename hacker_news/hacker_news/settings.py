@@ -37,6 +37,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
     'newsfeed',
 )
 
@@ -105,6 +106,10 @@ LOGIN_REDIRECT_URL = '/posts/'
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "static"),
+)
 
 UPDATE_NO = 90
 HN_ITEM_URL = 'https://hacker-news.firebaseio.com/v0/item/{item_id}.json?print=pretty'
