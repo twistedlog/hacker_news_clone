@@ -1,14 +1,55 @@
 {% extends "base.html" %}
 {% block content %}
 <h1>Items<h1>
-  <ul>
-    {% for item in news_items %}
-    <li>{{item.url}}</li>
-    {% empty %}
-    <li>No News Items yet.</li>
-    {% endfor %}
-  </ul>
- 
+  
+    <div class="panel panel-default">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>url</th>
+            <th>HN url</th>
+            <th>Comments</th>
+            <th>Likes</th>
+            <th>Date</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for item in news_items %}
+            <tr>
+              <td class="customtable">{{item.url}}</td>
+              <td class="customtable">{{item.hn_url}}</td>
+              <td>{{item.comments}}</td>
+              <td>{{item.upvotes}}</td>
+              <td>{{item.posted_on}}</td>
+              <td>
+                {% if not item.read %}
+                <form id="markRead" method="post" action="{% url 'read' %}">
+                  {% csrf_token %}
+                  <input type="hidden" name="item-id" value="{{item.id}}"/>
+                  <input class="btn btn-default btn-xs" type="submit" value="Read"/>
+                </form>
+                {% endif %}
+                <form id="markDeleted" method="post" action="{% url 'delete' %}">
+                  {% csrf_token %}
+                  <input type="hidden" name="item-id" value="{{item.id}}"/>
+                  <input class="btn btn-default btn-xs" type="submit" value="Delete"/>
+                </form>
+              </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  <script language="javascript" type="text/javascript"> 
+        // wait for the DOM to be loaded 
+        $(document).ready(function() { 
+            // bind 'myForm' and provide a simple callback function 
+            $('#markRead, #markDeleted').ajaxForm(function() { 
+                location.reload();
+            }); 
+        }); 
+    </script> 
   <div class="pagination">
     <span class="step-links">
       {% if page_obj.has_previous %}
