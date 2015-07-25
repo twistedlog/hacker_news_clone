@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+  <h2 class="form-signin-heading">Sign in for Hacker News</h2>
+  <form class="form-signin span4" id="login_form" method="post" action="{% url 'login' %}">
+  {% csrf_token %}
+  {{form.as_p}} 
+   <button class="btn btn-primary" type="submit">Sign in</button>
+  </form>
+</div>
+{%endblock %}

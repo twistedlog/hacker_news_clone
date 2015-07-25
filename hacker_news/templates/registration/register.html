@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Register for an account" %} {% endblock %}
+{% block content %}
+<div class="container">
+   <h2 class="form-signin-heading">Sign up for Hacker News</h2>
+  <form class="form-signin span4" method="post" action="">
+    {% csrf_token %}
+    {{form.as_p}}
+    <input class="btn btn-primary" type="submit" value="{% trans 'Submit' %}"/>
+  </form>
+</div>
+{% endblock %}
