@@ -14,7 +14,7 @@ class NewsItemListView(ListView):
     model = NewsItem
     
     def get_queryset(self):
-        qs = super(NewsItemListView, self).get_queryset()
+        qs = super(NewsItemListView, self).get_queryset().order_by('-posted_on')
         # get a list of items that have been marked deleted
         deleted_items = UserNewsItemTrack.objects.filter(
           user=self.request.user, deleted= True).values_list('news_item__id', flat=True)

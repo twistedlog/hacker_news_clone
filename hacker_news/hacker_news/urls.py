@@ -34,7 +34,8 @@ urlpatterns = [
     url(r'^accounts/login/$', login_forbidden(login), name='login'),
     url(r'^accounts/register/$', login_forbidden(RegistrationView.as_view()), name='register'),
     url(r'^accounts/logout/$', login_required(logout), {'next_page': '/accounts/login/'}, name='logout'),
-    url(r'^posts/', login_required(NewsItemListView.as_view()), name='post-list-view'),
+    url(r'^$', login_required(NewsItemListView.as_view()), name='main'),
+    url(r'^posts/$', login_required(NewsItemListView.as_view()), name='post-list-view'),
     url(r'^post/read/$', login_required(NewsItemReadView.as_view()), name='read'),
     url(r'^post/delete/$', login_required(NewsItemDeleteView.as_view()), name='delete'),
     
